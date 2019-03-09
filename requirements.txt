@@ -1,5 +1,1 @@
 tweepy
-base64
-requests
-datetime
-json
