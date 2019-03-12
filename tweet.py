@@ -40,8 +40,10 @@ for i in range(0, 10):
         dailyGameTwitterList = generateTweets( getDailyGameTweets() )
     for twt in dailyGameTwitterList:
         try:
+            print ( 'Trying to tweet' )
             twitterAPI.update_status( twt )
             dailyGameTwtterList.remove( twt )
+            print ( 'Tweeted: ' + str( twt ) )
         except:
-            pass
+            print ( 'ERROR Tweeting' )
     time.sleep(60 * 60 * 24)
