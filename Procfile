@@ -1,2 +1,2 @@
 worker: python tweet.py
-web: gunicorn hello:app
+web: gunicorn server.py
