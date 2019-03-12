@@ -33,10 +33,15 @@ def generateTweets( dailyGames ):
         return tweetList
 
 twitterAPI = initApi()
-dailyGameTwitterList = generateTweets( getDailyGameTweets() )
+dailyGameTwtterList = []
 
 for i in range(0, 10):
+    if not dailyGameTwtterList:
+        dailyGameTwitterList = generateTweets( getDailyGameTweets() )
     for twt in dailyGameTwitterList:
-        print (twt)
-        twitterAPI.update_status(twt)
+        try:
+            twitterAPI.update_status( twt )
+            dailyGameTwtterList.remove( twt )
+        except:
+            pass
     time.sleep(60 * 60 * 24)
