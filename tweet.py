@@ -1,14 +1,12 @@
 import tweepy, random, time
 from dailyGames import getDailyGameTweets
+from os import environ
 
 def initApi():
-    keyFile = open('keys.txt', 'r')
-    keys = keyFile.readlines();
-    keyFile.close()
-    consumer_key = keys[0]
-    consumer_secret = keys[1]
-    access_token = keys[2]
-    access_token_secret = keys[3]
+    consumer_key = environ['consumer_key']
+    consumer_secret = environ['consumer_secret']
+    access_token = environ['access_token']
+    access_token_secret = environ['access_token_secret']
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     return tweepy.API(auth)
