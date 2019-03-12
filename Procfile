@@ -1,2 +1,2 @@
 worker: python tweet.py
-web: gunicorn --log-file=- server.py:application
+web: gunicorn -w 4 eeeP0Bot:app
