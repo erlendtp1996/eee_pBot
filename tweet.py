@@ -37,6 +37,6 @@ dailyGameTwitterList = generateTweets( getDailyGameTweets() )
 
 for i in xrange(0, 10):
     for twt in dailyGameTwitterList:
-        print twt
+        print (twt)
         twitterAPI.update_status(twt)
     time.sleep(60 * 60 * 24)
