@@ -1,2 +1,2 @@
 worker: python tweet.py
-web: gunicorn -w 4 eeeP0Bot:app --preload
+web: python eeeP0Bot/__init__.py
