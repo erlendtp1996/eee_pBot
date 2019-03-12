@@ -35,7 +35,7 @@ def generateTweets( dailyGames ):
 twitterAPI = initApi()
 dailyGameTwitterList = generateTweets( getDailyGameTweets() )
 
-for i in xrange(0, 10):
+for i in range(0, 10):
     for twt in dailyGameTwitterList:
         print (twt)
         twitterAPI.update_status(twt)
