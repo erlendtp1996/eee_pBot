@@ -1,3 +1,4 @@
 tweepy
 Flask
 gunicorn
+APScheduler==3.0.0
