@@ -33,6 +33,7 @@ for i in range(0, 10):
     print ('Tweeting NBA GAMES FOR DATE = ' + str(dsf.getDate()))
     if not dailyGameTwtterList:
         dailyGameTwitterList = listToTweet( dsf.getDailyGameList() )
+        print ( dailyGameTwtterList )
     for twt in dailyGameTwitterList:
         try:
             print ( 'Trying to tweet' )
