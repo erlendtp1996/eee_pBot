@@ -3,7 +3,7 @@ import datetime
 from os import environ
 
 def getForDate():
-    return datetime.datetime.today().strftime('%Y%m%d')
+    return datetime.datetime.now().strftime('%Y%m%d')
 
 class MySportsFeedsFactory:
     def __init__( self, v = '1.2' ):
