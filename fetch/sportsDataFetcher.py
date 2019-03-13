@@ -1,5 +1,6 @@
 from ohmysportsfeedspy import MySportsFeeds
 import datetime
+from os import environ
 
 def getForDate():
     return datetime.datetime.today().strftime('%Y%m%d')
