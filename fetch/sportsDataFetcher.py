@@ -23,7 +23,7 @@ class DailySportsFetcher:
         return self.msf.msf_get_data( league='nba', season='2018-2019-regular', feed=feed, format='json', fordate=self.date )
 
     def getDailyGameList( self ):
-        dailyGameJson = fetch( 'daily_game_schedule' )
+        dailyGameJson = self.fetch( 'daily_game_schedule' )
         dailyGameList = []
         try:
             for game in dailyGames["dailygameschedule"]["gameentry"]:
