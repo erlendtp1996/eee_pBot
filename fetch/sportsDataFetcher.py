@@ -7,7 +7,7 @@ def getForDate():
 class MySportsFeedsFactory:
     def __init__( self, v = '1.2' ):
         self.msf = MySportsFeeds( version = v )
-        msf.authenticate(environ['apikey_token'], environ['password'])
+        self.msf.authenticate(environ['apikey_token'], environ['password'])
 
     def getMySportsFeed( self ):
         return self.msf
