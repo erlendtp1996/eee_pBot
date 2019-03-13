@@ -31,3 +31,6 @@ class DailySportsFetcher:
         except:
             pass
         return dailyGameList
+
+    def getDate( self ):
+        return self.date
