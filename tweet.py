@@ -1,6 +1,6 @@
 import tweepy, random, time
-from dailyGames import getDailyGameTweets
 from os import environ
+from fetch.sportsDataFetcher import DailySportsFetcher
 
 def initApi():
     consumer_key = environ['consumer_key']
@@ -11,33 +11,27 @@ def initApi():
     auth.set_access_token(access_token, access_token_secret)
     return tweepy.API(auth)
 
-def getTweets():
-    tweetFile = open('tweets.txt', 'r')
-    tweets = tweetFile.readlines()
-    tweetFile.close()
-    return tweets
-
-def generateTweets( dailyGames ):
-    if dailyGames == False:
-        return "Error generating the games today!"
-    else:
-        tweet = ""
-        tweetList = []
-        for dailyGame in dailyGames:
-            if len( tweet + dailyGame + "\n") < 140:
-                tweet = tweet + dailyGame + "\n"
+def listToTweet( stringList ):
+    tweetList = []
+    if stringList:
+        tweet = ''
+        for stingListItem in stringList:
+            if len( tweet + stingListItem + '\n') < 140:
+                tweet = tweet + stingListItem + '\n'
             else:
                 tweetList.append(tweet)
-                tweet = ""
+                tweet = ''
         tweetList.append(tweet)
-        return tweetList
+    return tweetList
 
 twitterAPI = initApi()
 dailyGameTwtterList = []
 
+# runs for ten days
 for i in range(0, 10):
+    dsf = DailySportsFetcher()
     if not dailyGameTwtterList:
-        dailyGameTwitterList = generateTweets( getDailyGameTweets() )
+        dailyGameTwitterList = listToTweet( dsf.getDailyGameList() )
     for twt in dailyGameTwitterList:
         try:
             print ( 'Trying to tweet' )
