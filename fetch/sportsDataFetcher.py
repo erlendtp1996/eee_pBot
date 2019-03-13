@@ -1,4 +1,5 @@
 from ohmysportsfeedspy import MySportsFeeds
+import datetime
 
 def getForDate():
     return datetime.datetime.today().strftime('%Y%m%d')
@@ -12,10 +13,10 @@ class MySportsFeedsFactory:
         return self.msf
 
 class DailySportsFetcher:
-    def __init__( self , date = getForDate() ):
+    def __init__( self ):
         sportsFeedFactory = MySportsFeedsFactory( '1.2' )
         self.msf = sportsFeedFactory.getMySportsFeed()
-        self.date = date
+        self.date = getForDate()
 
     def fetch( self, feed ):
         return self.msf.msf_get_data( league='nba', season='2018-2019-regular', feed=feed, format='json', fordate=self.date )
