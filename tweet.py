@@ -30,7 +30,7 @@ dailyGameTwtterList = []
 # runs for ten days
 for i in range(0, 10):
     dsf = DailySportsFetcher()
-    print ('Tweeting NBA GAMES FOR DATE =' + str(DailySportsFetcher.date))
+    print ('Tweeting NBA GAMES FOR DATE =' + str(DailySportsFetcher.getDate()))
     if not dailyGameTwtterList:
         dailyGameTwitterList = listToTweet( dsf.getDailyGameList() )
     for twt in dailyGameTwitterList:
