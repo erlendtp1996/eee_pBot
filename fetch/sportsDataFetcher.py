@@ -30,6 +30,7 @@ class DailySportsFetcher:
                 dailyGameList.append(str(game["homeTeam"]["Abbreviation"] + " vs " + game["awayTeam"]["Abbreviation"] + ": " + game["time"]))
         except Exception as e:
             print( e )
+            dailyGameList.append( 'There was an error tweeting the games!' )
         return dailyGameList
 
     def getDate( self ):
