@@ -12,14 +12,13 @@ def initApi():
     return tweepy.API(auth)
 
 def listToTweet( stringList ):
-    print ("Entering listToTweet", stringList )
     tweetList = []
     if stringList:
         tweet = ''
-        for stingListItem in stringList:
+        for stringListItem in stringList:
             print ("StringListItem", stringListItem)
-            if len( tweet + stingListItem + '\n') < 140:
-                tweet = tweet + stingListItem + '\n'
+            if len( str(tweet + stringListItem + '\n')) < 140:
+                tweet = str(tweet + stringListItem + '\n')
             else:
                 tweetList.append(tweet)
                 tweet = ''
