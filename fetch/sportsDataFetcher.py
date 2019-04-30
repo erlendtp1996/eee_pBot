@@ -20,7 +20,7 @@ class DailySportsFetcher:
         self.date = getForDate()
 
     def fetch( self, feed ):
-        return self.msf.msf_get_data( league='nba', season='2019-playoff', feed=feed, format='json', fordate=self.date )
+        return self.msf.msf_get_data( league='nba', season='2019-playoff', feed=feed, format='json', fordate=self.date, force='true')
 
     def getDailyGameList( self ):
         dailyGameList = []
