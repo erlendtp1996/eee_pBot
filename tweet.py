@@ -26,7 +26,7 @@ def listToTweet( stringList ):
     return tweetList
 
 twitterAPI = initApi()
-dailyGameTwtterList = []
+dailyGameTwitterList = []
 
 # runs for ten days
 for i in range(0, 10):
@@ -38,7 +38,7 @@ for i in range(0, 10):
         try:
             print ( 'Trying to tweet' )
             twitterAPI.update_status( twt )
-            dailyGameTwtterList.remove( twt )
+            dailyGameTwitterList.remove( twt )
             print ( 'Tweeted: ' + str( twt ) )
         except:
             print ( 'ERROR Tweeting' )
