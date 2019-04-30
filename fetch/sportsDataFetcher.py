@@ -26,9 +26,11 @@ class DailySportsFetcher:
         dailyGameList = []
         try:
             dailyGameJson = self.fetch( 'daily_game_schedule' )
-            print( len( dailyGameJson["dailygamesschedule"]["gameentry"] ) )
+            print( dailyGameJson )
             for game in dailyGameJson["dailygameschedule"]["gameentry"]:
                 dailyGameList.append(str(game["homeTeam"]["Abbreviation"] + " vs " + game["awayTeam"]["Abbreviation"] + ": " + game["time"]))
+            if (len(dailyGameList) == 0):
+                dailyGameList.append(" No games today! SAD! ;( ")
         except Exception as e:
             print( "Exception occured", e )
             dailyGameList.append( 'There was an error tweeting the games!' )
