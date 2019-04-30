@@ -16,7 +16,6 @@ def listToTweet( stringList ):
     if stringList:
         tweet = ''
         for stringListItem in stringList:
-            print ("StringListItem", stringListItem)
             if len( str(tweet + stringListItem + '\n')) < 140:
                 tweet = str(tweet + stringListItem + '\n')
             else:
