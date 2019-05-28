@@ -20,7 +20,7 @@ class DailySportsFetcher:
         self.date = getForDate()
 
     def fetch( self, feed ):
-        return self.msf.msf_get_data( league='nba', season='2019-playoff', feed=feed, format='json', fordate=self.date, force=True)
+        return self.msf.msf_get_data( league='nba', season='2019-playoff', feed=feed, format='json', fordate=self.date)
 
     def getDailyGameList( self ):
         dailyGameList = []
@@ -30,7 +30,6 @@ class DailySportsFetcher:
                 for game in dailyGameJson['dailygameschedule']['gameentry']:
                     dailyGameList.append(str(game['homeTeam']['Abbreviation'] + " vs " + game['awayTeam']['Abbreviation'] + ": " + game['time']))
             else:
-                print(' No games today ')
                 dailyGameList.append(" No games today! SAD! ;( ")
         except Exception as e:
             print( "Exception occured", e )

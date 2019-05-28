@@ -36,7 +36,7 @@ for i in range(0, 10):
     for twt in dailyGameTwitterList:
         try:
             print ( 'Trying to tweet' )
-            #twitterAPI.update_status( twt )
+            twitterAPI.update_status( twt )
             dailyGameTwitterList.remove( twt )
             print ( 'Tweeted: ' + str( twt ) )
         except:
