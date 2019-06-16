@@ -25,7 +25,7 @@ class DailySportsFetcher:
     def fetchNBA( self, feed, season ):
         return self.fetchJSON( feed, 'nba', season );
 
-    def fetchMLB( self, feed, season );
+    def fetchMLB( self, feed, season ):
         return self.fetchJSON( feed, 'mlb', season );
 
     def getDailyGameList( self ):
