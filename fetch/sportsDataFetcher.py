@@ -19,13 +19,19 @@ class DailySportsFetcher:
         self.msf = sportsFeedFactory.getMySportsFeed()
         self.date = getForDate()
 
-    def fetch( self, feed ):
-        return self.msf.msf_get_data( league='nba', season='2019-playoff', feed=feed, format='json', fordate=self.date)
+    def fetchJSON( self, feed, league, season ):
+        return self.msf.msf_get_data( league=league, season=season, feed=feed, format='json', fordate=self.date);
+
+    def fetchNBA( self, feed, season ):
+        return self.fetchJSON( feed, 'nba', season );
+
+    def fetchMLB( self, feed, season );
+        return self.fetchJSON( feed, 'mlb', season );
 
     def getDailyGameList( self ):
         dailyGameList = []
         try:
-            dailyGameJson = self.fetch( 'daily_game_schedule' )
+            dailyGameJson = self.fetchMLB( 'daily_game_schedule', '2019-regular' )
             if ( 'gameentry' in dailyGameJson['dailygameschedule'] ):
                 for game in dailyGameJson['dailygameschedule']['gameentry']:
                     dailyGameList.append(str(game['homeTeam']['Abbreviation'] + " vs " + game['awayTeam']['Abbreviation'] + ": " + game['time']))
