@@ -1,0 +1,5 @@
+*.pyc
+
+/results
+/__pycahce__
+Procfile
