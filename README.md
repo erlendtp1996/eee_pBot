@@ -1,7 +1,8 @@
 # @eee_pBot
-Built with the use of MySportsFeed's [python wrapper library](https://github.com/MySportsFeeds/mysportsfeeds-python), this twitter bot tweets the daily game schedule of a specific league depending on the season. <br/> Originally started for the NBA, eee_pBot now tweets MLB games and will pick up NFL when the season picks up.
+The goal of this repository is to hold a few different automated Twitter bots using different APIs. One example would be leveraging MySportsFeed's [python wrapper library](https://github.com/MySportsFeeds/mysportsfeeds-python), and tweeting the daily game schedule of a specific league depending on the season. <br/>
 
-# Sample tweet
+
+# Sample MySportsFeed tweet
 The following sample tweet was tweeted on Saturday July 7th, 2019 for the MLB.
 <br/>
 
