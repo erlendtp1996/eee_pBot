@@ -11,12 +11,6 @@ install pip
 
 make sure pip points to the correct python
 
-access_token - 982034714339966976-oYm8IIvchpMVLrumO4vRg7B9K9aQM4J
-access_token_secret - LIFSKVs2UtrrD2kCPB5PU5QlUKjy4R8k0a7lZxE6aR5fJ
-apikey_token - c1bb6ebc-a473-4626-832b-de4db6
-consumer_key - l2qNQISzGtFhnznDOI6iJi8ld
-consumer_secret - RAiE6GKtWvxXG4ei8AZ00q6RKxVnQnKHiFRvMExsuJX64rezmw
-password - nbaAPI1!
 
 consumer_key = environ['consumer_key']
 consumer_secret = environ['consumer_secret']
@@ -26,10 +20,10 @@ access_token_secret = environ['access_token_secret']
 """
 
 def initApi():
-    consumer_key = 'l2qNQISzGtFhnznDOI6iJi8ld'
-    consumer_secret = 'RAiE6GKtWvxXG4ei8AZ00q6RKxVnQnKHiFRvMExsuJX64rezmw'
-    access_token = '982034714339966976-oYm8IIvchpMVLrumO4vRg7B9K9aQM4J'
-    access_token_secret = 'LIFSKVs2UtrrD2kCPB5PU5QlUKjy4R8k0a7lZxE6aR5fJ'
+    consumer_key = ''
+    consumer_secret = ''
+    access_token = ''
+    access_token_secret = ''
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     return tweepy.API(auth)
