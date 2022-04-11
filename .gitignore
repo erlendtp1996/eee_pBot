@@ -3,3 +3,10 @@
 /results
 /__pycahce__
 Procfile
+
+src/java/eeepbot/properties.txt
+src/java/eeepbot/target
+src/java/eeepbot/.classpath
+src/java/eeepbot/.settings
+
+*.project
