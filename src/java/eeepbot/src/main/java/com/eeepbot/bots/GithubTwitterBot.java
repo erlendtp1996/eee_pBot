@@ -2,7 +2,7 @@ package com.eeepbot.bots;
 
 import java.net.*;
 
-public class GithubTwitterBot extends TwitterBot implements Runnable {
+public class GithubTwitterBot extends TwitterBot {
 	
 	public GithubTwitterBot() {
 		super();

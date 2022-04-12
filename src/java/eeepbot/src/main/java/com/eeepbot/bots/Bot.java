@@ -1,5 +1,5 @@
 package com.eeepbot.bots;
 
-public interface Bot {
+public interface Bot extends Runnable {
 	public void action();
 }
