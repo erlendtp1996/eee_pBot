@@ -2,7 +2,7 @@ package com.eeepbot.bots;
 
 import java.util.List;
 
-public abstract class TwitterBot implements Bot, Runnable {
+public abstract class TwitterBot implements Bot {
 	
 	private String twitterClientToken;
 	private List<String> tweets;

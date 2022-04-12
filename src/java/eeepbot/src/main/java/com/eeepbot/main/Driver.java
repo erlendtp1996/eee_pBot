@@ -18,11 +18,11 @@ public class Driver {
 		}
 		
 		System.out.println("Executing threads...");
-		List<TwitterBot> bots = new ArrayList<TwitterBot>();
+		List<Bot> bots = new ArrayList<Bot>();
 		
 		bots.add(new GithubTwitterBot());
 		
-		for (TwitterBot bot: bots) {
+		for (Bot bot: bots) {
 			bot.run();
 		}
 	}
