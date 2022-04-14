@@ -26,7 +26,6 @@ class MySportsFeedsFactory:
     def __init__( self, v = '1.2' ):
         self.msf = MySportsFeeds( version = v )
         #self.msf.authenticate(environ['apikey_token'], environ['password'])
-        self.msf.authenticate('c1bb6ebc-a473-4626-832b-de4db6', 'nbaAPI1!')
 
     def getMySportsFeed( self ):
         return self.msf
