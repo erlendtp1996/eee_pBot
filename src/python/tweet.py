@@ -70,10 +70,12 @@ Begin logic
 
 """
 
-twitterAPI = initApi()
-leagueList = initLeagueList()
+print ("This bot is currently under maintenance")
 
-dsf = DailySportsFetcher()
-print ('Tweeting GAMES FOR DATE = ' + str(dsf.getDate()))
-for league in leagueList:
-    tweetLeague( dsf, league )
+#twitterAPI = initApi()
+#leagueList = initLeagueList()
+
+#dsf = DailySportsFetcher()
+#print ('Tweeting GAMES FOR DATE = ' + str(dsf.getDate()))
+#for league in leagueList:
+#    tweetLeague( dsf, league )
