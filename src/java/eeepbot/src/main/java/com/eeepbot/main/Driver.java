@@ -18,9 +18,19 @@ public class Driver {
 		}
 		
 		System.out.println("Executing threads...");
+		
+//		Bot test = null;
+//		try {
+//			Class<?> c = Class.forName("com.eeepbot.bots.GithubTwitterBot");
+//			test = (Bot) c.newInstance();
+//		} catch (Exception e) {
+//			System.out.println(e);
+//		}
+		
+		
 		List<Bot> bots = new ArrayList<Bot>();
 		
-		bots.add(new GithubTwitterBot());
+		bots.add(new GithubTwitterBot(props.get("githubToken")));
 		
 		for (Bot bot: bots) {
 			bot.run();

@@ -5,6 +5,7 @@
 Procfile
 
 src/java/eeepbot/properties.txt
+src/java/eeepbot/properties.json
 src/java/eeepbot/target
 src/java/eeepbot/.classpath
 src/java/eeepbot/.settings
