@@ -2,32 +2,28 @@ package com.eeepbot.bots;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 public class GithubTwitterBot extends TwitterBot {
 	
-	private HttpURLConnection connection;
-	private String token;
+	private String githubToken;
 	private String requestBody = "{ \"query\":\"query { viewer { login } } \" }";
 	
-	public GithubTwitterBot() {
-		super();
-	}
-	
-	public GithubTwitterBot(String token) {
-		super();
-		this.token = token;
+	public GithubTwitterBot(String githubToken, String consumerKey, String consumerSecret, String accessToken, String tokenSecret) {
+		super(consumerKey, consumerSecret, accessToken, tokenSecret);
+		this.githubToken = githubToken;
 	}	
 
 	@Override
 	public void generateTweetList() throws Exception {
 		System.out.println("Generating tweet list");
-		URL url = new URL("https://api.github.com/graphql");
+		url = new URL("https://api.github.com/graphql");
 		connection = (HttpURLConnection) url.openConnection();
 		
 		connection.setRequestMethod("POST");
 		connection.setRequestProperty("Content-Length", Integer.toString(requestBody.getBytes().length));
 		connection.setRequestProperty("Content-Type", "application/json");
-		connection.setRequestProperty("Authorization", "Bearer " + token);
+		connection.setRequestProperty("Authorization", "Bearer " + githubToken);
 		connection.setDoOutput(true);
 		
 		DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
@@ -43,7 +39,8 @@ public class GithubTwitterBot extends TwitterBot {
 			response.append("\r");
 		}
 		rd.close();
-		System.out.println(response.toString());
+		
+		tweets = response.toString();
 	}
 
 	public void run() {

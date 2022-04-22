@@ -30,7 +30,11 @@ public class Driver {
 		
 		List<Bot> bots = new ArrayList<Bot>();
 		
-		bots.add(new GithubTwitterBot(props.get("githubToken")));
+		bots.add(new GithubTwitterBot(props.get("githubToken"), 
+				props.get("twitterConsumerKey"),  
+				props.get("twitterConsumerSecret"),  
+				props.get("twitterAccessToken"),  
+				props.get("twitterTokenSecret")));
 		
 		for (Bot bot: bots) {
 			bot.run();
