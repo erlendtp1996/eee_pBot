@@ -21,7 +21,7 @@ public abstract class TwitterBot implements Bot {
 		this.tokenSecret = tokenSecret;
 	}
 	
-	// get's something to tweet
+	// get something to tweet
 	public abstract void generateTweetList();
 	
 	public void run() {
