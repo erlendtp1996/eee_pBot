@@ -11,3 +11,4 @@ src/java/eeepbot/.classpath
 src/java/eeepbot/.settings
 
 *.project
+bots.xml

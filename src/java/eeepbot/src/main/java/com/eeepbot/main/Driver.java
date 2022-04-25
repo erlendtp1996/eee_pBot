@@ -19,6 +19,7 @@ public class Driver {
 		
 		System.out.println("Executing threads...");
 		
+//		Will come back to this via properties implementation
 //		Bot test = null;
 //		try {
 //			Class<?> c = Class.forName("com.eeepbot.bots.GithubTwitterBot");
@@ -42,6 +43,7 @@ public class Driver {
 	}
 	
 	public static void readProps() throws Exception {
+		//tmp until properties schema is defined
 		props = new HashMap<String, String>();
 		File propsFile = new File("properties.txt");
 		Scanner scan = new Scanner(propsFile);
@@ -53,10 +55,4 @@ public class Driver {
 		}
 		scan.close();
 	}
-	
-	/**
-	 *  1. Integrate with S3 bucket to get active bots
-	 *  2. Get github oauth token & send graph ql request
-	 *  3. Authenticate with 
-	 */
 }
