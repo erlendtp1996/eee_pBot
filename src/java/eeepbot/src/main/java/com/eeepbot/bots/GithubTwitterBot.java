@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -36,6 +37,15 @@ public class GithubTwitterBot extends TwitterBot {
 	private String githubToken;
 	private String requestBody;
 	
+	public GithubTwitterBot() {
+		super();
+	}
+	
+	public void setProperties(Map<String, String> props) {
+		setGithubToken(props.get("githubToken"));
+		super.setProperties(props);
+	}
+
 	private String wrap(String str, String wrapper) {
 		return wrapper + str + wrapper;
 	}
@@ -68,18 +78,12 @@ public class GithubTwitterBot extends TwitterBot {
 		str.append(wrapString(buildGraphQLRequest()));
 		str.append(" }");
 		return str.toString();
-	}
-	
-	
-	public GithubTwitterBot(String githubToken, String consumerKey, String consumerSecret, String accessToken, String tokenSecret) {
-		super(consumerKey, consumerSecret, accessToken, tokenSecret);
-		this.githubToken = githubToken;
 	}	
 
 	@Override
 	public void generateTweetList() {
 		try {
-			requestBody = buildRequestBody();
+			/*requestBody = buildRequestBody();
 			
 			url = new URL("https://api.github.com/graphql");
 			connection = (HttpURLConnection) url.openConnection();
@@ -110,9 +114,9 @@ public class GithubTwitterBot extends TwitterBot {
 					.getJSONObject("user")
 					.getJSONObject("contributionsCollection").getInt("totalCommitContributions");
 
-			System.out.println("commits: " + commits.toString());
+			System.out.println("commits: " + commits.toString());*/
 			
-			tweets = "commits: " + commits.toString();
+			setTweets("the service thread tweeting this was generated dynamically");
 		}
 		catch (Exception e) {
 			System.out.println(e);
@@ -122,5 +126,13 @@ public class GithubTwitterBot extends TwitterBot {
 				connection.disconnect();
 			}
 		}
+	}
+	
+	public void setGithubToken(String githubToken) {
+		this.githubToken = githubToken;
+	}
+
+	public void setRequestBody(String requestBody) {
+		this.requestBody = requestBody;
 	}
 }

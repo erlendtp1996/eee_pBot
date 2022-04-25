@@ -2,57 +2,76 @@ package com.eeepbot.main;
 
 import java.io.File;
 import java.util.*;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import com.eeepbot.bots.*;
 
 public class Driver {
-
-	private static Map<String, String> props;
 	
 	public static void main(String[] args) {
-		System.out.println("Let's get started!");
-		System.out.println("Reading property file");
+		List<Bot> bots = new ArrayList<Bot>();
+		
 		try {
-			readProps();
+			File file = new File("bots.xml");
+			
+			//prepare XML
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document document = db.parse(file);
+			document.getDocumentElement().normalize();
+			NodeList botNodes = document.getElementsByTagName("bot");
+			
+			
+			// loop through each bot
+			for (int i = 0; i < botNodes.getLength(); i++) {
+				Bot tmp;
+				
+				Node botNode = botNodes.item(i);
+				if (botNode.getNodeType() == Node.ELEMENT_NODE) {
+					//create each bot
+					Element eElement = (Element) botNode;
+					String botName = eElement.getElementsByTagName("package").item(0).getTextContent() + "." +
+							eElement.getElementsByTagName("name").item(0).getTextContent();
+					
+					
+					//create propertyMap
+					Map<String, String> propertyMapping = generateProperties(eElement.getElementsByTagName("property"));
+					
+					
+					
+					Class<?> c = Class.forName(botName);
+					tmp = (Bot) c.newInstance();
+					tmp.setProperties(propertyMapping);
+					bots.add(tmp);
+					
+				}
+				
+				for (Bot bot: bots) {
+					bot.run();
+				}
+			}		
+			
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		
-		System.out.println("Executing threads...");
-		
-//		Will come back to this via properties implementation
-//		Bot test = null;
-//		try {
-//			Class<?> c = Class.forName("com.eeepbot.bots.GithubTwitterBot");
-//			test = (Bot) c.newInstance();
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
-		
-		
-		List<Bot> bots = new ArrayList<Bot>();
-		
-		bots.add(new GithubTwitterBot(props.get("githubToken"), 
-				props.get("twitterConsumerKey"),  
-				props.get("twitterConsumerSecret"),  
-				props.get("twitterAccessToken"),  
-				props.get("twitterTokenSecret")));
-		
-		for (Bot bot: bots) {
-			bot.run();
-		}
 	}
 	
-	public static void readProps() throws Exception {
-		//tmp until properties schema is defined
-		props = new HashMap<String, String>();
-		File propsFile = new File("properties.txt");
-		Scanner scan = new Scanner(propsFile);
-		while (scan.hasNextLine()) {
-			String propertyDefinition = scan.nextLine();
-			String[] propertyKeyValuePair = propertyDefinition.split("=");
-			props.put(propertyKeyValuePair[0], propertyKeyValuePair[1]);
-			System.out.println("Just read in " + propertyKeyValuePair[0] + "=" + propertyKeyValuePair[1]);
+	public static Map<String, String> generateProperties(NodeList properties) {
+		Map<String, String> propertyMapping = new HashMap<String, String>();
+		for (int i = 0; i < properties.getLength(); i++) {
+			Node currentProperty = properties.item(i);
+			NamedNodeMap attributeMap = currentProperty.getAttributes();
+			propertyMapping.put(attributeMap.getNamedItem("id").getTextContent(),currentProperty.getTextContent().trim()); 
 		}
-		scan.close();
+		return propertyMapping;
 	}
 }
