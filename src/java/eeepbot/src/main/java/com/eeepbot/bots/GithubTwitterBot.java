@@ -31,6 +31,7 @@ contributionsCollection (from:"2022-04-24T16:27:55Z") {
  */
 public class GithubTwitterBot extends TwitterBot {
 	
+	private final String GITHUB_GRAPHQL_ENDPOINT = "https://api.github.com/graphql";
 	private URL url;
 	private HttpURLConnection connection;
 	
@@ -48,6 +49,10 @@ public class GithubTwitterBot extends TwitterBot {
 
 	private String wrap(String str, String wrapper) {
 		return wrapper + str + wrapper;
+	}
+	
+	private String wrap(String beginning, String str, String end) {
+		return beginning + str + end;
 	}
 	
 	private String wrapString(String str) {
@@ -85,7 +90,7 @@ public class GithubTwitterBot extends TwitterBot {
 		try {
 			/*requestBody = buildRequestBody();
 			
-			url = new URL("https://api.github.com/graphql");
+			url = new URL(GITHUB_GRAPHQL_ENDPOINT);
 			connection = (HttpURLConnection) url.openConnection();
 			
 			connection.setRequestMethod("POST");

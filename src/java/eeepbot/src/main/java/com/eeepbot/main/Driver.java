@@ -36,28 +36,27 @@ public class Driver {
 				
 				Node botNode = botNodes.item(i);
 				if (botNode.getNodeType() == Node.ELEMENT_NODE) {
-					//create each bot
+					
+					//Resolve classname
 					Element eElement = (Element) botNode;
 					String botName = eElement.getElementsByTagName("package").item(0).getTextContent() + "." +
 							eElement.getElementsByTagName("name").item(0).getTextContent();
 					
-					
 					//create propertyMap
 					Map<String, String> propertyMapping = generateProperties(eElement.getElementsByTagName("property"));
 					
-					
-					
-					Class<?> c = Class.forName(botName);
-					tmp = (Bot) c.newInstance();
+					// create instance & set properties
+					tmp = createBot(botName);
 					tmp.setProperties(propertyMapping);
 					bots.add(tmp);
-					
 				}
 				
-				for (Bot bot: bots) {
-					bot.run();
-				}
-			}		
+			}	
+			
+			// execute the bots
+			for (Bot bot: bots) {
+				bot.run();
+			}
 			
 		} catch (Exception e) {
 			System.out.println(e);
@@ -73,5 +72,10 @@ public class Driver {
 			propertyMapping.put(attributeMap.getNamedItem("id").getTextContent(),currentProperty.getTextContent().trim()); 
 		}
 		return propertyMapping;
+	}
+	
+	public static Bot createBot(String className) throws Exception {
+		Class<?> c = Class.forName(className);
+		return (Bot) c.newInstance();
 	}
 }
