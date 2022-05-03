@@ -25,8 +25,9 @@ public abstract class TwitterBot implements Bot {
 
 	public void run() {
 		try {
-			generateTweetList();
-			action();
+			System.out.println("Hello, I am a thread executing");
+			//generateTweetList();
+			//action();
 		} catch (Exception e) {
 			System.out.println("This bot thread has failed....");
 			System.out.println(e);
