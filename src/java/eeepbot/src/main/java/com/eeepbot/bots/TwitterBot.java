@@ -1,5 +1,7 @@
 package com.eeepbot.bots;
 
+import java.util.Map;
+
 import com.twitter.clientlib.ApiException;
 import com.twitter.clientlib.TwitterCredentialsOAuth1;
 import com.twitter.clientlib.api.TwitterApi;
@@ -8,26 +10,24 @@ import com.twitter.clientlib.model.TweetCreateResponse;
 
 public abstract class TwitterBot implements Bot {
 	
-	String tweets;
+	private String tweets;
 	private String consumerKey;
 	private String consumerSecret;
 	private String accessToken;
 	private String tokenSecret;
 	
-	TwitterBot (String consumerKey, String consumerSecret, String accessToken, String tokenSecret) {
-		this.consumerKey = consumerKey;
-		this.consumerSecret = consumerSecret;
-		this.accessToken = accessToken;
-		this.tokenSecret = tokenSecret;
+	public TwitterBot() {
+		// TODO Auto-generated constructor stub
 	}
-	
-	// get's something to tweet
+
+	// get something to tweet
 	public abstract void generateTweetList();
-	
+
 	public void run() {
 		try {
-			generateTweetList();
-			action();
+			System.out.println("Hello, I am a thread executing");
+			//generateTweetList();
+			//action();
 		} catch (Exception e) {
 			System.out.println("This bot thread has failed....");
 			System.out.println(e);
@@ -52,5 +52,32 @@ public abstract class TwitterBot implements Bot {
 	      System.err.println("Response headers: " + e.getResponseHeaders());
 	      e.printStackTrace();
 	    }
+	}
+	
+	public void setProperties(Map<String, String> props) {
+		setConsumerKey(props.get("twitterConsumerKey"));
+		setConsumerSecret(props.get("twitterConsumerSecret"));
+		setAccessToken(props.get("twitterAccessToken"));
+		setTokenSecret(props.get("twitterTokenSecret"));
+	}
+	
+	public void setTweets(String tweets) {
+		this.tweets = tweets;
+	}
+	
+	public void setConsumerKey(String consumerKey) {
+		this.consumerKey = consumerKey;
+	}
+
+	public void setConsumerSecret(String consumerSecret) {
+		this.consumerSecret = consumerSecret;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public void setTokenSecret(String tokenSecret) {
+		this.tokenSecret = tokenSecret;
 	}
 }
