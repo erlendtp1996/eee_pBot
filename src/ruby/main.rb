@@ -1,70 +1,12 @@
-require 'uri'
-require 'base64'
-require 'net/http'
-require 'openssl'
 require 'json'
+require_relative 'auth'
+require_relative 'request'
 
-module OAuthAuthentication
-    extend self
-    def createOAuthHeader (method, baseURL, options = {})
-        consumerSecret = options[:consumer_secret]
-        accessTokenSecret = options[:access_token_secret]
-        options.delete( :consumer_secret )
-        options.delete( :access_token_secret )
+EXECUTE_BOT_COMMAND = "execute bot"
+NEW_TWEET_COMMAND = "new tweet"
 
-        parameterString = createParameterString( options )
-        baseString = createBaseString( method, baseURL, parameterString)
-        signingKey = createSigningKey( consumerSecret, accessTokenSecret)
-        signature = createSignature( signingKey, baseString )
-
-        authString = createAuthString( options, signature )
-    end
-
-    private
-
-    def encodeString ( str )
-        if !str.instance_of? String
-            str = str.to_s
-        end
-        str = URI.escape( str )
-        return str.gsub("+", "%2B").gsub(",", "%2C").gsub("!", "%21").gsub(":", "%3A").gsub("/", "%2F").gsub("=", "%3D").gsub("&", "%26")
-    end
-
-    def createParameterString ( parameters )
-        parameterString = ""
-        sortedKeys = parameters.keys.sort
-        sortedKeys.each_with_index do |key, index|
-            parameterString << encodeString( key ) << "=" << encodeString( parameters[key] ) << (index == sortedKeys.length - 1 ? "" : "&")
-        end
-        return parameterString
-    end
-    
-    def createBaseString (method, baseURL, parameterString)
-        return method.upcase + "&" + encodeString( baseURL ) + "&" + encodeString( parameterString )
-    end
-    
-    def createSigningKey ( consumerSecret, accessTokenSecret ) 
-        return encodeString( consumerSecret ) + "&" + encodeString( accessTokenSecret )
-    end 
-    
-    def createSignature ( signingKey, baseString )
-        return Base64.encode64("#{OpenSSL::HMAC.digest('sha1', signingKey, baseString)}").strip.gsub("+", "%2B").gsub("=", "%3D")
-    end
-    
-    def createAuthString( parameters, signature )
-        authString = "OAuth "
-        parameters.delete(:status)
-        parameters = parameters.merge({ oauth_signature: signature })
-        sortedKeys = parameters.keys.sort
-        sortedKeys.each_with_index do |key, index|
-            authString << key.to_s << "=" << '"' << parameters[key] << '"' << (index == sortedKeys.length - 1 ? "" : ',')
-        end
-        return authString
-    end
-end
-
-
-def updateStatus (status)
+# update twitter status
+def updateTwitterStatus (status)
     method = "POST"
     baseURL = "https://api.twitter.com/1.1/statuses/update.json"
 
@@ -83,30 +25,14 @@ def updateStatus (status)
     }
 
     authHeader = OAuthAuthentication.createOAuthHeader( method, baseURL, params )
-    baseURL = baseURL + "?status=#{status}"
-    sendPostRequest( baseURL , { Authorization: authHeader } )
+    HTTPClient.sendRequest(method, baseURL + "?status=#{status}" , { Authorization: authHeader } )
 end
 
-def sendPostRequest (uri, requestOptions = {})
-    url = URI (uri)
-    http = Net::HTTP.new(url.host, url.port)
-
-    request = Net::HTTP::Post.new(url)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    
-    requestOptions.keys.each do |key|
-        request[key] = requestOptions[key]
-    end
-
-    puts request["Authorization"]
-
-    response = http.request(request)
-    response.code
-    puts response
-end
-
+# sets environment variables from a file
 def setEnv (filePath)
+    if filePath.length == 0
+        return
+    end 
     file = File.open(filePath)
     fileData = file.readlines.map(&:chomp)
     file.close
@@ -116,9 +42,33 @@ def setEnv (filePath)
     end
 end
 
+# prompts user & returns response
+def getInput(prompt)
+    puts prompt
+    gets.chomp
+end
+
+# accepts new user tweet
+def newTweet 
+    status = getInput("What would you like to tweet?")
+    updateTwitterStatus (status.strip)
+end
+
+# invokes twitter bot to get from API
+def invokeBot()
+    today = Time.now.strftime("%Y-%m-%d")
+
+    requestParams = {
+        "X-RapidAPI-Key": ENV["X_RapidAPI_Key"],
+        "X-RapidAPI-Host": ENV["X_RapidAPI_Host"]
+    }
+
+    uri = "https://api-nba-v1.p.rapidapi.com/games?date=#{today}"
+    puts HTTPClient.sendRequest("GET", uri , requestParams )
+end
+
+
 setEnv("../../.env")
+operation = getInput("What do you want to do? (#{EXECUTE_BOT_COMMAND}; #{NEW_TWEET_COMMAND})")
 
-puts "What would you like to tweet?"
-status = gets 
-
-updateStatus (status.strip)
+operation.eql? EXECUTE_BOT_COMMAND ? invokeBot() : newTweet()
